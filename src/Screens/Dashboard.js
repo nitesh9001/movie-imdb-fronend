@@ -200,7 +200,7 @@ const Dashboard = (props) => {
         <div className="main-wrap">
              <div className="background_list">
              {!typeFilter  ? 
-               genersMovies.length !== 0 ? genersMovies.map((data, i) => <Card key={i} data={data} setWatchLater ={addFav}/> ) : 
+               genersMovies?.length !== 0 ? genersMovies.map((data, i) => <Card key={i} data={data} setWatchLater ={addFav}/> ) : 
                <div style={{color:"white", textAlign:"center",width:"100%", fontSize:40}}>
                    <b>No data Found</b>
                 </div>
