@@ -52,7 +52,7 @@ export const headerAuth = (token) => {
       }
     return data
 }
-export const apiEndPoint = 'http://localhost:8080/api/v1'
+export const apiEndPoint = "https://movie-imdb-fynd.herokuapp.com/api/v1"
 
 export const validateEmail = (email) => {
   const re =
