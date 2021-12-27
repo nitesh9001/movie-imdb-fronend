@@ -36,3 +36,4 @@ This is deployed on Netlify with CI/CD
 6. login / Singup/logut functional(JWT token)
 7. To add movies / edit/ delete/ uodate you must be loggedin (added aws s3 bucket support for fast rendering of images )
 8. You will be only able to edit or change or delete your data not other's added 
+9. As loged in user you can add or remove watch later list
