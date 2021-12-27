@@ -4,6 +4,7 @@ import { Button, Chip, IconButton } from '@material-ui/core';
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 import  {getHrminFormate, formatDate, upcomingClac } from '../utlis/genric';
 import { useDispatch, useSelector } from 'react-redux';
 import { delMovies} from '../services/movieServices';
@@ -69,6 +70,24 @@ function Card(props) {
                        </div>
                      <span style={{color:"white",textTransform:"capitalize", fontSize:"14px"}}> {state?.storyline?.substring(0, 100)} ...</span>
                      <div>
+                         {props?.watchlater ? <Button size={"small"} color="primary"
+                        style={{
+                            background: "red",
+                            color: "white",
+                            fontSize:"15px",
+                            fontWeight:"500",
+                            borderRadius:"50px",
+                            textTransform: "None",
+                            marginTop:20
+                        }}
+                        onClick={() => {
+                          props?.setWatchLater(state?._id,
+                              );
+                        }} 
+                        >
+                           <RemoveIcon /> Watch Later
+                         </Button>
+                         :
                          <Button size={"small"} color="primary"
                         style={{
                             background: "red",
@@ -78,9 +97,14 @@ function Card(props) {
                             borderRadius:"50px",
                             textTransform: "None",
                             marginTop:20
-                        }}>
+                        }}
+                        onClick={() => {
+                          props?.setWatchLater(state?._id);
+                        }} 
+                        >
                            <AddIcon /> Watch Later
                          </Button>
+                         }
                      </div>
                      <div>
                          <Button size={"small"} color="primary"

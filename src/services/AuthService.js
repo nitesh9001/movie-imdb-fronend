@@ -1,4 +1,4 @@
-import {login, register} from "../redux/actions/authAction";
+import {login, register, watchLater} from "../redux/actions/authAction";
 import axios from 'axios';
 import { apiEndPoint, headerAuth } from "../utlis/genric";
 import { SNACKBAR_SHOW } from "../redux/actions/snackbarAction";
@@ -110,5 +110,77 @@ export const doRegister = (dataAuth, dispatch, setIsErrorC, setButtonClicked) =>
     }).finally(()=>{
        window.location.reload();
        window.location.reload();
+    })
+}
+
+export const getWatchLater = ( dispatch ) => { 
+    axios.get(`${apiEndPoint}/auth/watchlater`,
+      headerAuth(true)
+    ).then(response => {
+        if(response?.data?.success === true){
+            dispatch(watchLater(response?.data?.data));
+        }
+        else{
+            dispatch(SNACKBAR_SHOW({
+                show: true,
+                data: {
+                severity: "error",
+                duration: 3000,
+                message: response?.data?.message,
+                },
+            }))
+        }
+    }).catch((err) => {
+        console.log('error looged in genre', err);
+         dispatch(SNACKBAR_SHOW({
+            show: true,
+            data: {
+            severity: "error",
+            duration: 3000,
+            message: "Something went Wrong",
+            },
+        })
+        )
+    })
+}
+
+export const addWatchLater = ( dispatch, movie_id, setTypeFilterF ) => { 
+    axios.post(`${apiEndPoint}/auth/watchlater`,
+      movie_id,
+      headerAuth(true)
+    ).then(response => {
+        if(response?.data?.success === true){
+             dispatch(SNACKBAR_SHOW({
+                show: true,
+                data: {
+                severity: "success",
+                duration: 3000,
+                message: response?.data?.message,
+                },
+            }))
+        }
+        else{
+            dispatch(SNACKBAR_SHOW({
+                show: true,
+                data: {
+                severity: "error",
+                duration: 3000,
+                message: response?.data?.message,
+                },
+            }))
+        }
+    }).catch((err) => {
+        console.log('error looged in genre', err);
+         dispatch(SNACKBAR_SHOW({
+            show: true,
+            data: {
+            severity: "error",
+            duration: 3000,
+            message: "Something went Wrong",
+            },
+        })
+        )
+    }).finally(()=> {
+        setTypeFilterF(false);
     })
 }

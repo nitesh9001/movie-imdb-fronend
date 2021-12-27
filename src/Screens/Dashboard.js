@@ -11,6 +11,7 @@ import Card from './Card';
 import Spinner from '../Spinner';
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { searchAction } from '../redux/actions/searchAction';
+import { addWatchLater, getWatchLater } from '../services/AuthService';
 
 const Dashboard = (props) => {
 
@@ -18,12 +19,14 @@ const Dashboard = (props) => {
     const showButon = localStorage.getItem('jwt-token-login')?.length > 0 ? true : false;
     const [isAscending, setIsAscending] = useState(false);
     const genersData = useSelector((state) => state?.genre?.genre);
+    const watchLaterData = useSelector((state) => state?.auth?.watchLater);
     const genersDa = useSelector((state) => state);
     const genersMovies = useSelector((state) => state?.movie?.movie);
     const [typeFilter, setTypeFilter] = useState(false);
+    const [typeFilterF, setTypeFilterF] = useState(false);
     const [valFilter, setValFilter] = useState('');
     const [sortVal, setSortVal] = useState('createdAt');
-    const [searchval, setSearchval] = useState('');
+    const [searchval, setSearchval] = useState('')
 
     useState(() => {
         console.log('pooling', genersDa,"p",props)
@@ -47,8 +50,35 @@ const Dashboard = (props) => {
 
     useEffect(()=> {
       getGenre(dispatch);
-    //   dispatch(searchAction(''));
     },[]);
+    
+    const getFavMovies = () => {
+        getWatchLater(dispatch);
+    }
+    useEffect(()=> {
+        getFavMovies();
+    },[typeFilterF]);
+    
+    const addFav = (data_id) => {
+        if(data_id) {
+          setTypeFilterF(true);
+          const watchLater = {
+              movie_id: data_id,
+              remove: false
+          }
+          addWatchLater(dispatch, watchLater,setTypeFilterF)
+        }
+    };
+    const removeWatchLater = (data_id) => {
+         if(data_id) {
+          setTypeFilterF(true);
+          const watchLater = {
+              movie_id: data_id,
+              remove: true
+          }
+          addWatchLater(dispatch, watchLater,setTypeFilterF)
+        }
+    }
 
     useEffect(()=> {
       fetchMovies();
@@ -170,7 +200,7 @@ const Dashboard = (props) => {
         <div className="main-wrap">
              <div className="background_list">
              {!typeFilter  ? 
-               genersMovies.length !== 0 ? genersMovies.map((data, i) => <Card key={i} data={data} /> ) : 
+               genersMovies.length !== 0 ? genersMovies.map((data, i) => <Card key={i} data={data} setWatchLater ={addFav}/> ) : 
                <div style={{color:"white", textAlign:"center",width:"100%", fontSize:40}}>
                    <b>No data Found</b>
                 </div>
@@ -179,6 +209,24 @@ const Dashboard = (props) => {
             }
             </div>
         </div>
+        <div className="movie_list_watchlater">
+            <div>
+                <span style={{color:"white", 
+                fontWeight:500, 
+                fontSize:"20px"}}> Watch Later List
+                </span>
+            </div>
+        </div>
+        <div className="background_list">
+             {!typeFilterF  ?
+               watchLaterData.length !== 0 && watchLaterData !== [] && watchLaterData !== undefined ? watchLaterData.map((data, i) => <Card key={i} data={data} setWatchLater ={removeWatchLater} watchlater={true} /> ) : 
+               <div style={{color:"white", textAlign:"center",width:"100%", fontSize:35}}>
+                   <b>Add some movies to watch later</b>
+                </div>
+            :
+             "Loading..."
+            }
+            </div>
         </>
     )
 }
