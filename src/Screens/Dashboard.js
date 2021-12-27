@@ -31,7 +31,7 @@ const Dashboard = (props) => {
            setSearchval(props?.searchkey_text);
         }
         setTypeFilter(true);
-    });
+    },[]);
 
     const fetchMovies = () => {
         const sorting = {

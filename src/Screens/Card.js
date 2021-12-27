@@ -17,7 +17,7 @@ function Card(props) {
     // const [images, setImage] = useState('');
     
     const imageGetter = (imgString) => {
-      var image = imgString?.data.toString('base64');
+      var image = imgString?.data?.toString('base64');
       var imageReturned = `data:${imgString?.contentType};base64,` + image
       return imageReturned
     }
@@ -30,12 +30,12 @@ function Card(props) {
     const equateAuth = () => {
        console.log(state?.creator?.map(d=>d._id)[0]?.toString())
        return state?.creator?.map(d=>d._id)[0]?.toString() === userData?._id?.toString()
-     }
+    }
     return (
         <div className="card_main_warpper">
             <div className="card_image">
                  {upcomingClac(state?.releaseDate) ? <span className="style_upcoming">Upcoming</span> :""}
-               <img src={imageGetter(state?.posterurl)} className="image_back_card" alt=""/>
+               <img src={state?.posterurl ? imageGetter(state?.posterurl) : "https://askleo.askleomedia.com/wp-content/uploads/2004/06/no_image-300x245.jpg"} className="image_back_card" alt=""/>
                <div className="time"><span>{getHrminFormate(state?.duration)}</span></div>
                <div className="card_details">
                     <div style={{width:"90%", margin:"0 auto"}}>

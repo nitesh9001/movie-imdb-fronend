@@ -40,6 +40,7 @@ function AddMovie(props) {
     const [posterurl, setPosterurl] = useState('');
     const [upadate, setUpdate] = useState(false)
     const [images, setImage] = useState('');
+    const [isFormInvalidImage, setIsFormInvalidImage] = useState(false);
 
     const fetchGenres = () => {
       getGenre(dispatch);
@@ -62,9 +63,9 @@ function AddMovie(props) {
        setStars(response?.stars);
        setLanguage(response?.language);
        setGenresd(response?.genres);
+       
        var image = response?.posterurl?.data.toString('base64');
-       setImage(`data:${response?.posterurl.contentType};base64,` + image)
-       console.log(response?.language)
+       setImage(response?.posterurl ? (`data:${response?.posterurl?.contentType};base64,` + image) : "https://askleo.askleomedia.com/wp-content/uploads/2004/06/no_image-300x245.jpg")
     }
     console.log(typeof releaseDate)
     const fetchMovie = (id)=> {
@@ -153,11 +154,25 @@ function AddMovie(props) {
       console.log(language, stars)
 
     }
+    const fileCheck = (file) => {
+      console.log(file.type)
+      if(file?.type === 'image/jpeg' || file?.type === 'image/jpg' || 
+      file?.type === 'image/png'
+      ){
+        setPosterurl(file);
+        setImage(''); 
+      }
+      else{
+        setPosterurl('');
+        setImage('');
+        setIsFormInvalidImage(true);
+      }
+    }
     console.log(userData)
     return (
         <div className="form_back">
           <form method="post" encType="multipart/form-data">
-            <h1 style={{textAlign:"center", color:"red"}}>Add Movie</h1>
+            <h1 style={{textAlign:"center", color:"red"}}>{props.match.params?.movie_id ? "Edit ":"Add"} Movie</h1>
             <div className="text_list">
               <div>
               <Row
@@ -314,23 +329,24 @@ function AddMovie(props) {
                 <Col sm="3" style={{marginLeft:"40px"}}>
                   <TextField
                     required={true}
-                    error={isFormInvalid}
+                    accept=".jpg,.png"
+                    helperText={isFormInvalidImage ? "This file type is not accepted" : " only png/ jpeg/jpg"}
+                    error={isFormInvalid || isFormInvalidImage}
                     margin="dense"
                     variant="outlined"
                     type="file"
                     style={{ backgroundColor: "#F5F5F5" }}
                     placeholder="File"
                     onChange={(e) => {
-                      setPosterurl(e.target.files[0]);
-                      setImage('');
+                      fileCheck(e.target.files[0]);
                     }}
                   />
                   <RefreshIcon  style={{fontSize: 36, padding: 5, cursor:"pointer"}} onClick={() => {
-                    alert(posterurl);
                     setPosterurl('');
                   }}/>
                 </Col>
               </Row>
+             
              {upadate && images && <Row>
                <div className="imd_add_border">
                   {/* <CloseIcon onClick={() => {
