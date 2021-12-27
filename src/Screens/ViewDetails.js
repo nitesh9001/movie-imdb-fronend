@@ -43,7 +43,7 @@ const ViewDetails = (props) => {
             {isLoading ? <Spinner /> : singleData ?  
             <>
                 <div className="movie_card_left">
-                   <img src={imageGetter(singleData?.posterurl)} alt="" className="img_deatils"/>
+                   <img src={singleData?.posterurl ? singleData?.posterurl?.data :""} alt="" className="img_deatils"/>
                 </div>
                 <div className="movie_card_right">
                    <div className="movie_card_right_info">

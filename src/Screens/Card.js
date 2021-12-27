@@ -12,30 +12,33 @@ function Card(props) {
     
     const dispatch = useDispatch();
     const userData = useSelector((state) => state?.auth?.user);
-    const showButon = localStorage.getItem('jwt-token-login')?.length > 0 ? true : false
     const [state, setstate] = useState('');
     // const [images, setImage] = useState('');
     
+    // image parser for Buffer data
     const imageGetter = (imgString) => {
       var image = imgString?.data?.toString('base64');
       var imageReturned = `data:${imgString?.contentType};base64,` + image
       return imageReturned
     }
+
     const deleteMovies = (id) => {
       delMovies(dispatch, id);
     }
     useEffect(() => {
         setstate(props?.data);
     },[]);
+
     const equateAuth = () => {
        console.log(state?.creator?.map(d=>d._id)[0]?.toString())
        return state?.creator?.map(d=>d._id)[0]?.toString() === userData?._id?.toString()
     }
+    
     return (
         <div className="card_main_warpper">
             <div className="card_image">
                  {upcomingClac(state?.releaseDate) ? <span className="style_upcoming">Upcoming</span> :""}
-               <img src={state?.posterurl ? imageGetter(state?.posterurl) : "https://askleo.askleomedia.com/wp-content/uploads/2004/06/no_image-300x245.jpg"} className="image_back_card" alt=""/>
+               <img src={state?.posterurl ? state?.posterurl?.data : "https://askleo.askleomedia.com/wp-content/uploads/2004/06/no_image-300x245.jpg"} className="image_back_card" alt=""/>
                <div className="time"><span>{getHrminFormate(state?.duration)}</span></div>
                <div className="card_details">
                     <div style={{width:"90%", margin:"0 auto"}}>
