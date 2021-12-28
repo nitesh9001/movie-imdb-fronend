@@ -53,8 +53,9 @@ const Dashboard = (props) => {
     },[]);
     
     const getFavMovies = () => {
+        setTypeFilterF(false);
         if(showButon === true){
-          getWatchLater(dispatch);
+          getWatchLater(dispatch, setTypeFilterF);
         }
         else{
           getWatchLaterGuest(dispatch, watchLaterData);
@@ -73,7 +74,7 @@ const Dashboard = (props) => {
               movie_id: data_id,
               remove: false
           }
-          addWatchLater(dispatch, watchLater,setTypeFilterF)
+          addWatchLater(dispatch, watchLater,setTypeFilterF, getFavMovies)
         }
         if(!showButon){
             setTypeFilterF(true);
@@ -89,7 +90,7 @@ const Dashboard = (props) => {
               movie_id: data_id,
               remove: true
           }
-          addWatchLater(dispatch, watchLater,setTypeFilterF)
+          addWatchLater(dispatch, watchLater,setTypeFilterF,getFavMovies)
         }
         if(!showButon){
             setTypeFilterF(true);
@@ -218,7 +219,7 @@ const Dashboard = (props) => {
         <div className="main-wrap">
              <div className="background_list">
              {!typeFilter  ? 
-               genersMovies?.length !== 0 ? genersMovies.map((data, i) => <Card key={i} data={data} setWatchLater ={addFav}/> ) : 
+               genersMovies?.length !== 0 ? genersMovies.map((data, i) => (<Card key={data?._id} data={data} setWatchLater ={addFav}/> )) : 
                <div style={{color:"white", textAlign:"center",width:"100%", fontSize:40}}>
                    <b>No data Found</b>
                 </div>
@@ -237,7 +238,7 @@ const Dashboard = (props) => {
         </div>
         <div className="background_list">
              {!typeFilterF  ?
-               watchLaterData?.length !== 0 && watchLaterData !== [] && watchLaterData !== undefined ? watchLaterData.map((data, i) => <Card key={i} data={data} setWatchLater ={removeWatchLater} watchlater={true} /> ) : 
+               watchLaterData?.length !== 0 && watchLaterData !== [] && watchLaterData !== undefined ? watchLaterData.map((data, i) => ( <Card key={data?._id} data={data} setWatchLater ={removeWatchLater} watchlater={true} /> )) : 
                <div style={{color:"white", textAlign:"center",width:"100%", fontSize:35}}>
                    <b>Add some movies to watch later</b>
                 </div>

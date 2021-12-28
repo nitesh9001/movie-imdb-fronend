@@ -113,7 +113,7 @@ export const doRegister = (dataAuth, dispatch, setIsErrorC, setButtonClicked) =>
     })
 }
 
-export const getWatchLater = ( dispatch ) => { 
+export const getWatchLater = ( dispatch, setTypeFilterF ) => { 
     axios.get(`${apiEndPoint}/auth/watchlater`,
       headerAuth(true)
     ).then(response => {
@@ -141,10 +141,14 @@ export const getWatchLater = ( dispatch ) => {
             },
         })
         )
+    }).finally(()=> {
+       setTimeout(() => {
+         setTypeFilterF(false);
+    }, 1000);
     })
 }
 
-export const addWatchLater = ( dispatch, movie_id, setTypeFilterF ) => { 
+export const addWatchLater = ( dispatch, movie_id, setTypeFilterF , getFavMovies) => { 
     axios.post(`${apiEndPoint}/auth/watchlater`,
       movie_id,
       headerAuth(true)
@@ -179,9 +183,10 @@ export const addWatchLater = ( dispatch, movie_id, setTypeFilterF ) => {
             message: "Something went Wrong",
             },
         })
-        )
+      )
     }).finally(()=> {
-        setTypeFilterF(false);
+         setTypeFilterF(false);
+         getFavMovies();
     })
 }
 
