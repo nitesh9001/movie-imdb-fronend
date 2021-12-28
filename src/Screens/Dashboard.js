@@ -11,7 +11,7 @@ import Card from './Card';
 import Spinner from '../Spinner';
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { searchAction } from '../redux/actions/searchAction';
-import { addWatchLater, getWatchLater } from '../services/AuthService';
+import { addWatchLater, getWatchLater, getWatchLaterGuest,addLocalWatchLater, removeLocalWatchLater } from '../services/AuthService';
 
 const Dashboard = (props) => {
 
@@ -53,14 +53,21 @@ const Dashboard = (props) => {
     },[]);
     
     const getFavMovies = () => {
-        getWatchLater(dispatch);
+        if(showButon === true){
+          getWatchLater(dispatch);
+        }
+        else{
+          getWatchLaterGuest(dispatch, watchLaterData);
+        }
+
     }
+
     useEffect(()=> {
         getFavMovies();
     },[typeFilterF]);
     
     const addFav = (data_id) => {
-        if(data_id) {
+        if(data_id && showButon) {
           setTypeFilterF(true);
           const watchLater = {
               movie_id: data_id,
@@ -68,15 +75,26 @@ const Dashboard = (props) => {
           }
           addWatchLater(dispatch, watchLater,setTypeFilterF)
         }
+        if(!showButon){
+            setTypeFilterF(true);
+            const watchLater = data_id
+           addLocalWatchLater(dispatch, watchLater, watchLaterData,setTypeFilterF)
+        }
     };
+
     const removeWatchLater = (data_id) => {
-         if(data_id) {
+         if(data_id && showButon) {
           setTypeFilterF(true);
           const watchLater = {
               movie_id: data_id,
               remove: true
           }
           addWatchLater(dispatch, watchLater,setTypeFilterF)
+        }
+        if(!showButon){
+            setTypeFilterF(true);
+            const watchLater = data_id
+           removeLocalWatchLater(dispatch, watchLater, watchLaterData,setTypeFilterF)
         }
     }
 

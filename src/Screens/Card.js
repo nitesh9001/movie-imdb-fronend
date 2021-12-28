@@ -10,7 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { delMovies} from '../services/movieServices';
 
 function Card(props) {
-    
+
+    const showButon = localStorage.getItem('jwt-token-login')?.length > 0 ? true : false;
     const dispatch = useDispatch();
     const userData = useSelector((state) => state?.auth?.user);
     const [state, setstate] = useState('');
@@ -81,8 +82,7 @@ function Card(props) {
                             marginTop:20
                         }}
                         onClick={() => {
-                          props?.setWatchLater(state?._id,
-                              );
+                            props?.setWatchLater(state?._id);
                         }} 
                         >
                            <RemoveIcon /> Watch Later
@@ -99,7 +99,8 @@ function Card(props) {
                             marginTop:20
                         }}
                         onClick={() => {
-                          props?.setWatchLater(state?._id);
+                          const data = showButon ? state?._id : state;
+                          props?.setWatchLater(data);
                         }} 
                         >
                            <AddIcon /> Watch Later
