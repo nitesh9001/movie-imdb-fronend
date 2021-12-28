@@ -113,7 +113,7 @@ export const doRegister = (dataAuth, dispatch, setIsErrorC, setButtonClicked) =>
     })
 }
 
-export const getWatchLater = ( dispatch ) => { 
+export const getWatchLater = ( dispatch, setTypeFilterF ) => { 
     axios.get(`${apiEndPoint}/auth/watchlater`,
       headerAuth(true)
     ).then(response => {
@@ -141,6 +141,10 @@ export const getWatchLater = ( dispatch ) => {
             },
         })
         )
+    }).finally(()=> {
+       setTimeout(() => {
+         setTypeFilterF(false);
+    }, 1000);
     })
 }
 
@@ -181,7 +185,9 @@ export const addWatchLater = ( dispatch, movie_id, setTypeFilterF ) => {
         })
         )
     }).finally(()=> {
-        setTypeFilterF(false);
+       setTimeout(() => {
+         setTypeFilterF(false);
+    }, 1000);
     })
 }
 
