@@ -148,7 +148,7 @@ export const getWatchLater = ( dispatch, setTypeFilterF ) => {
     })
 }
 
-export const addWatchLater = ( dispatch, movie_id, setTypeFilterF ) => { 
+export const addWatchLater = ( dispatch, movie_id, setTypeFilterF , getFavMovies) => { 
     axios.post(`${apiEndPoint}/auth/watchlater`,
       movie_id,
       headerAuth(true)
@@ -183,11 +183,10 @@ export const addWatchLater = ( dispatch, movie_id, setTypeFilterF ) => {
             message: "Something went Wrong",
             },
         })
-        )
+      )
     }).finally(()=> {
-       setTimeout(() => {
          setTypeFilterF(false);
-    }, 1000);
+         getFavMovies();
     })
 }
 
