@@ -16,3 +16,10 @@ export const register = (authData) => {
     }
 }
 
+export const watchLater = (watchLater) => {
+    console.log('watch later action', watchLater)
+    return {
+        type: ActionTypes.SETWATCHLATER,
+        payload: watchLater
+    }
+}
