@@ -237,7 +237,7 @@ const Dashboard = (props) => {
         </div>
         <div className="background_list">
              {!typeFilterF  ?
-               watchLaterData.length !== 0 && watchLaterData !== [] && watchLaterData !== undefined ? watchLaterData.map((data, i) => <Card key={i} data={data} setWatchLater ={removeWatchLater} watchlater={true} /> ) : 
+               watchLaterData?.length !== 0 && watchLaterData !== [] && watchLaterData !== undefined ? watchLaterData.map((data, i) => <Card key={i} data={data} setWatchLater ={removeWatchLater} watchlater={true} /> ) : 
                <div style={{color:"white", textAlign:"center",width:"100%", fontSize:35}}>
                    <b>Add some movies to watch later</b>
                 </div>
