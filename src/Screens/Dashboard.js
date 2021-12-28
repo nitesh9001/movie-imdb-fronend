@@ -54,7 +54,7 @@ const Dashboard = (props) => {
     
     const getFavMovies = () => {
         if(showButon === true){
-          getWatchLater(dispatch);
+          getWatchLater(dispatch, setTypeFilterF);
         }
         else{
           getWatchLaterGuest(dispatch, watchLaterData);
