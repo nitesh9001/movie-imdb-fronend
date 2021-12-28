@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+https://fynd-imdb.netlify.app/
+
+# Getting Started with fynd Imdb App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -24,7 +26,7 @@ Your app is ready to be deployed!
 
 ### Deployment
 
-This is deployed on Netlify with CI/CD 
+This is deployed on Netlify with autodeploy github -- >https://fynd-imdb.netlify.app/
 
 ### Functionlity
 
