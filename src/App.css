@@ -162,8 +162,8 @@
   transition: 0.5s ease-in-out;
 }
 .main-wrap{
-  height: 100%;
-  margin-bottom: 300px;
+  height: auto;
+  margin-bottom: 30px;
 }
 .movie_list_watchlater{
   width: 90%;
